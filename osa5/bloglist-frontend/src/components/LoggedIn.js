@@ -1,16 +1,21 @@
 import Blog from './Blog'
+import NewBlogForm from './NewBlogForm'
 
 const logOut = () => {
   window.localStorage.clear()
   window.location.reload();
-  
 }
-const NewBlog = ({blogs, user}) => {
+
+const Logged = ({blogs, user, setBlogs, setMessage}) => {
 
   return (
     <div>
-      <p>{user.name} logged in </p>
-      <button onClick={logOut}> Log Out</button>
+      <p>
+        {user.name} logged in 
+        <button onClick={logOut}>logout</button>
+      </p>
+      <NewBlogForm setBlogs={setBlogs} blogs={blogs} setMessage={setMessage}/>
+      
       <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
@@ -20,4 +25,4 @@ const NewBlog = ({blogs, user}) => {
   )
 }
 
- export default NewBlog
+ export default Logged

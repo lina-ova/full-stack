@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import NewBlog from './components/LoggedIn'
+import Logged from './components/LoggedIn'
 import Login from './components/Login'
 import blogService from './services/blogs'
 import Notification from './components/Notification'
@@ -28,7 +28,7 @@ const App = () => {
       <Notification message={errorMessage} />
       {user === null
         ? <Login setUser={setUser} setErrorMessage={setErrorMessage}/>
-        : <NewBlog blogs={blogs} user={user} />}
+        : <Logged blogs={blogs} user={user} setBlogs={setBlogs} setMessage={setErrorMessage} />}
       
     </div>
   )
