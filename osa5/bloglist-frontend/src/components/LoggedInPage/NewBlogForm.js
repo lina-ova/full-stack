@@ -1,7 +1,7 @@
-import { useState } from "react"
-import blogService from '../services/blogs'
+import { useState } from 'react'
+import blogService from '../../services/blogs'
 
-const NewBlogForm = ({setBlogs, blogs, setMessage}) => {
+const NewBlogForm = ({ setBlogs, blogs, setMessage }) => {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
   const [author, setAuthor] = useState('')
@@ -9,10 +9,10 @@ const NewBlogForm = ({setBlogs, blogs, setMessage}) => {
 
   const addBlog = async (event) => {
     event.preventDefault()
-
     const blogObject = {
       title,
       url,
+      author
     }
 
     const savedBlog = await blogService.create(blogObject)
@@ -30,34 +30,33 @@ const NewBlogForm = ({setBlogs, blogs, setMessage}) => {
       <h2>create new</h2>
       <form onSubmit={addBlog}>
         <div>
-          title 
+          title
           <input
             type="text"
             value={title}
             name="title"
-            onChange={({ target }) => setTitle(target.value)} 
+            onChange={({ target }) => setTitle(target.value)}
             required/>
         </div>
-      <div>
-      url 
-        <input
-          type="url"
-          value={url}
-          name="url"
-          onChange={({ target }) => setUrl(target.value)} 
-          required/>
-      </div>
-      <div>
-      author 
-        <input
-          type="text"
-          value={author}
-          name="url"
-          onChange={({ target }) => setAuthor(target.value)} />
-      </div>
-      
-      <button type="submit">save</button>
-      </form> 
+        <div>
+        url
+          <input
+            type="url"
+            value={url}
+            name="url"
+            onChange={({ target }) => setUrl(target.value)}
+            required/>
+        </div>
+        <div>
+        author
+          <input
+            type="text"
+            value={author}
+            name="url"
+            onChange={({ target }) => setAuthor(target.value)} />
+        </div>
+        <button type="submit">save</button>
+      </form>
     </div>
   )
 }
