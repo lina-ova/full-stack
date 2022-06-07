@@ -1,4 +1,4 @@
-import Blog from './Blog'
+import { Blog } from './Blog/Blog'
 import NewBlogForm from './NewBlogForm'
 import Togglable from './Toggleble'
 import { useRef } from 'react'

@@ -3,6 +3,8 @@
  5.1-4
  5.5-10
  5.11-12
+  5.13-15
+5.17-21
 
 ## Getting Started with Create React App
 
