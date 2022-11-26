@@ -18,7 +18,15 @@ const Ancecdote = ({key, anecdote, handleClick }) => {
 
 const AnecdoteList = () => {
 
-    const anecdotes = useSelector(state => state.anecdotes)
+    const anecdotes = useSelector(({ filter, anecdotes }) => {
+        let kaikki = anecdotes
+        if (filter) {
+          kaikki = anecdotes.filter(anecdote =>
+            anecdote.content.includes(filter))
+        }
+    
+        return kaikki
+      })
     const dispatch = useDispatch()
     const voteForAnecdote = (anecdote) => {
         dispatch(vote(anecdote.id))
