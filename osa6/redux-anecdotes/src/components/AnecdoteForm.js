@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
-import { createNotification, deleteNotification } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const NewAnecdote = () => {
     const dispatch = useDispatch()
@@ -12,11 +12,7 @@ const NewAnecdote = () => {
 
 
         dispatch(createAnecdote(content))
-        dispatch(createNotification(`lisätty anekdoottia: ${content}`))
-        setTimeout(
-            async () => dispatch(deleteNotification()),
-            50000
-          )
+        dispatch(setNotification(`lisätty anekdoottia: ${content}`, 10))
       }
     
     return (
