@@ -1,3 +1,4 @@
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -19,7 +20,7 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const ancdeoteReducer = (state = initialState, action) => {
+const ancdeoteReducer = (state = [], action) => {
   switch(action.type) {
     case "VOTE" : 
       const id = action.data.id 
@@ -34,7 +35,9 @@ const ancdeoteReducer = (state = initialState, action) => {
         .sort((a,b) => { return b.votes - a.votes})
 
     case 'NEW_ANECDOTE':
-      return [...state, action.data]
+      return [...state, action.data.anecdote]
+      case 'SET_ANECDOTES':
+        return action.data.anecdotes
     default: 
         return state
   }
@@ -47,13 +50,20 @@ export const vote = (id) => {
   }
 }
 
-export const createAnecdote = ( content ) => {
+export const createAnecdote = ( anecdote ) => {
   return {
     type: 'NEW_ANECDOTE',
     data: {
-      content,
-      id: getId(), 
-      votes: 0
+      anecdote: anecdote
+    }
+  }
+}
+
+export const setAnecdotes = ( anecdotes ) => {
+  return {
+    type: 'SET_ANECDOTES',
+    data: {
+      anecdotes: anecdotes
     }
   }
 }
