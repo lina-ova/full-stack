@@ -2,7 +2,7 @@ tehtävät:
 6.3-6.8
 6.9-6.12
 6.13-6.14
-6.15-6.16
+6.15-6.17
 
 
 # Getting Started with Create React App
