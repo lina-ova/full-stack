@@ -12,7 +12,7 @@ const NewAnecdote = (props) => {
         event.target.anecdote.value = ''
 
         props.createAnecdote(content)
-        props.setNotification(`lisätty anekdoottia: ${content}`, 10)
+        props.setNotification(`lisätty anekdoottia: ${content}`)
       }
     
     return (
