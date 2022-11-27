@@ -1,6 +1,4 @@
-# Tehtävät
-7.1-7.3
-7.4-7.6
+# Tehtävä 7.7
 
 # Getting Started with Create React App
 
