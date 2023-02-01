@@ -1,5 +1,5 @@
-const Authors = ({result}) => {
-  if (result.loading) {
+const Authors = ({show, result}) => {
+  if (!show || result.loading) {
     return null
   }
   const authors = result.data.allAuthors
