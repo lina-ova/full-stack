@@ -21,7 +21,9 @@ const ALL = gql`
   }
 `
 const App = () => {
-  const result = useQuery(ALL)
+  const result = useQuery(ALL, {
+    pollInterval: 2000
+  })
   const [page, setPage] = useState('authors')
 
   return (
