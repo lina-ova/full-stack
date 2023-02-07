@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { React, useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
+import Select from 'react-select';
 
 export const EDIT_YEAR = gql`
   mutation editAuthor($name: String!, $setBornTo: Int!) {
@@ -9,16 +10,17 @@ export const EDIT_YEAR = gql`
     }
   }
 `
-const BornForm = () => {
-  const [name, setName] = useState('')
+const BornForm = ({authors}) => {
+  const [name, setName] = useState()
   const [born, setBorn] = useState('')
+  const options= authors.map(author => ({value: author.name, label: author.name}))
 
   const [ changeYear ] = useMutation(EDIT_YEAR)
 
   const submit = async (event) => {
     event.preventDefault()
 
-    changeYear({ variables: { name, setBornTo: Number(born) } })
+    changeYear({ variables: { name: name.value, setBornTo: Number(born) } })
 
     setName('')
     setBorn('')
@@ -30,10 +32,12 @@ const BornForm = () => {
 
       <form onSubmit={submit}>
         <div>
-          name <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
+          name       
+          <Select
+        defaultValue={name}
+        onChange={setName}
+        options={options}
+      />
         </div>
         <div>
           born <input

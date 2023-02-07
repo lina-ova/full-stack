@@ -27,7 +27,7 @@ const Authors = ({show, result}) => {
         </tbody>
       </table>
       <div>
-        <BornForm />
+        <BornForm authors={authors}/>
       </div>
     </div>
   )
