@@ -1,3 +1,6 @@
+import BornForm from "./SetBorn"
+
+
 const Authors = ({show, result}) => {
   if (!show || result.loading) {
     return null
@@ -23,8 +26,14 @@ const Authors = ({show, result}) => {
           ))}
         </tbody>
       </table>
+      <div>
+        <BornForm />
+      </div>
     </div>
   )
 }
+
+
+
 
 export default Authors
