@@ -1,4 +1,4 @@
-tehtävät: 8.8, 8.9
+tehtävät: 8.8-8.12
 
 # Getting Started with Create React App
 
