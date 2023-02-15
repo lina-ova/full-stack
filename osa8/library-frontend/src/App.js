@@ -27,6 +27,11 @@ const App = () => {
   if (result.loading) {
     return <div>loading...</div>;
   }
+  let genres = Array.prototype.concat.apply(
+    [],
+    result.data.allBooks.map((b) => b.genres)
+  );
+  genres = [...new Set(genres)];
 
   const notify = (message) => {
     setErrorMessage(message);
@@ -56,7 +61,7 @@ const App = () => {
       </div>
       <Notify errorMessage={errorMessage} />
       <Authors show={page === "authors"} result={result} token={token} />
-      <Books show={page === "books"} result={result} />
+      <Books show={page === "books"} genres={genres} />
       <NewBook show={page === "add"} setError={notify} />
       <LoginForm
         show={page === "login" && !token}

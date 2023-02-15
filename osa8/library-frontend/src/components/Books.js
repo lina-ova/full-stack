@@ -1,4 +1,14 @@
-const Books = ({ show, result }) => {
+import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { FIND_BY_GENRE } from "../queries";
+
+const Books = ({ show, genres }) => {
+  const [filter, setFilter] = useState();
+
+  const result = useQuery(FIND_BY_GENRE, {
+    variables: { genre: filter },
+  });
+
   if (!show || result.loading) {
     return null;
   }
@@ -25,6 +35,10 @@ const Books = ({ show, result }) => {
           ))}
         </tbody>
       </table>
+      {genres.map((genre) => (
+        <button onClick={() => setFilter(genre)}>{genre}</button>
+      ))}
+      <button onClick={() => setFilter(undefined)}>all genres</button>
     </div>
   );
 };
