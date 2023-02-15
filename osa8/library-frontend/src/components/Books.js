@@ -1,9 +1,9 @@
-const Books = ({show,result}) => {
+const Books = ({ show, result }) => {
   if (!show || result.loading) {
-    return null
+    return null;
   }
 
-  const books = result.data.allBooks
+  const books = result.data.allBooks;
 
   return (
     <div>
@@ -19,14 +19,14 @@ const Books = ({show,result}) => {
           {books.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
-              <td>{a.author}</td>
+              <td>{a.author.name}</td>
               <td>{a.published}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default Books
+export default Books;
