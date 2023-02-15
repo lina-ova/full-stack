@@ -1,11 +1,11 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { v1: uuid } = require("uuid");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 const Book = require("./models/book");
 const Author = require("./models/author");
-const book = require("./models/book");
 require("dotenv").config();
+
+const { GraphQLError } = require("graphql");
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -89,7 +89,21 @@ const resolvers = {
     addBook: async (root, args) => {
       let author = await Author.findOne({ name: args.author });
       if (!author) {
-        author = await new Author({ name: args.author, born: null }).save();
+        author = new Author({ name: args.author, born: null });
+        try {
+          await author.save();
+        } catch (error) {
+          throw new GraphQLError(
+            "Saving author failed, because name is too short",
+            {
+              extensions: {
+                code: "BAD_USER_INPUT",
+                invalidArgs: args.author,
+                error,
+              },
+            }
+          );
+        }
       }
 
       const book = new Book({
@@ -98,12 +112,48 @@ const resolvers = {
         published: args.published,
         genres: args.genres,
       });
-      return book.save();
+
+      try {
+        await book.save();
+      } catch (error) {
+        throw new GraphQLError(
+          "Saving book failed, because title is too short",
+          {
+            extensions: {
+              code: "BAD_USER_INPUT",
+              invalidArgs: args.title,
+              error,
+            },
+          }
+        );
+      }
+      return book;
     },
     editAuthor: async (root, args) => {
       const author = await Author.findOne({ name: args.name });
+      if (!author) {
+        throw new GraphQLError("Saving author failed", {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args.name,
+            error: "author was not found",
+          },
+        });
+      }
       author.born = args.setBornTo;
-      return author.save();
+
+      try {
+        await author.save();
+      } catch (error) {
+        throw new GraphQLError("Saving author failed", {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args.name,
+            error,
+          },
+        });
+      }
+      return author;
     },
   },
 };
