@@ -1,11 +1,10 @@
-import BornForm from "./SetBorn"
+import BornForm from "./SetBorn";
 
-
-const Authors = ({show, result}) => {
+const Authors = ({ show, result, token }) => {
   if (!show || result.loading) {
-    return null
+    return null;
   }
-  const authors = result.data.allAuthors
+  const authors = result.data.allAuthors;
 
   return (
     <div>
@@ -26,14 +25,9 @@ const Authors = ({show, result}) => {
           ))}
         </tbody>
       </table>
-      <div>
-        <BornForm authors={authors}/>
-      </div>
+      {token && <BornForm authors={authors} />}
     </div>
-  )
-}
+  );
+};
 
-
-
-
-export default Authors
+export default Authors;

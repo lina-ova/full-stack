@@ -1,30 +1,26 @@
-import { React, useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
-import Select from 'react-select';
+import { React, useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+import Select from "react-select";
 
-export const EDIT_YEAR = gql`
-  mutation editAuthor($name: String!, $setBornTo: Int!) {
-    editAuthor(name: $name, setBornTo: $setBornTo)  {
-      name
-      born
-    }
-  }
-`
-const BornForm = ({authors}) => {
-  const [name, setName] = useState()
-  const [born, setBorn] = useState('')
-  const options= authors.map(author => ({value: author.name, label: author.name}))
+import { EDIT_YEAR } from "../queries";
+const BornForm = ({ authors }) => {
+  const [name, setName] = useState();
+  const [born, setBorn] = useState("");
+  const options = authors.map((author) => ({
+    value: author.name,
+    label: author.name,
+  }));
 
-  const [ changeYear ] = useMutation(EDIT_YEAR)
+  const [changeYear] = useMutation(EDIT_YEAR);
 
   const submit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    changeYear({ variables: { name: name.value, setBornTo: Number(born) } })
+    changeYear({ variables: { name: name.value, setBornTo: Number(born) } });
 
-    setName('')
-    setBorn('')
-  }
+    setName("");
+    setBorn("");
+  };
 
   return (
     <div>
@@ -32,23 +28,20 @@ const BornForm = ({authors}) => {
 
       <form onSubmit={submit}>
         <div>
-          name       
-          <Select
-        defaultValue={name}
-        onChange={setName}
-        options={options}
-      />
+          name
+          <Select defaultValue={name} onChange={setName} options={options} />
         </div>
         <div>
-          born <input
+          born{" "}
+          <input
             value={born}
             onChange={({ target }) => setBorn(target.value)}
           />
         </div>
-        <button type='submit'>change year</button>
+        <button type="submit">change year</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default BornForm
+export default BornForm;
