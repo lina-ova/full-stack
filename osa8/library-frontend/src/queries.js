@@ -17,6 +17,9 @@ export const ALL = gql`
       }
       genres
     }
+    me {
+      favoriteGenre
+    }
   }
 `;
 
@@ -66,6 +69,14 @@ export const FIND_BY_GENRE = gql`
       author {
         name
       }
+    }
+  }
+`;
+
+export const FAVORITE_GENRE = gql`
+  query {
+    me {
+      favoriteGenre
     }
   }
 `;

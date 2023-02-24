@@ -2,6 +2,7 @@ import { useState } from "react";
 import Authors from "./components/Authors";
 import Books from "./components/Books";
 import NewBook from "./components/NewBook";
+import Recommendations from "./components/Recommend";
 import { useQuery, useApolloClient } from "@apollo/client";
 import { ALL } from "./queries";
 
@@ -19,6 +20,8 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [token, setToken] = useState(null);
+  const [favGenre, setFavGenre] = useState(null);
+
   const result = useQuery(ALL, {
     pollInterval: 2000,
   });
@@ -43,6 +46,7 @@ const App = () => {
     setToken(null);
     localStorage.clear();
     client.resetStore();
+    setPage("authors");
   };
 
   return (
@@ -53,6 +57,9 @@ const App = () => {
         {token ? (
           <>
             <button onClick={() => setPage("add")}>add book</button>
+            <button onClick={() => setPage("recommend")}>
+              recommendations
+            </button>
             <button onClick={logout}>logout</button>
           </>
         ) : (
@@ -63,10 +70,12 @@ const App = () => {
       <Authors show={page === "authors"} result={result} token={token} />
       <Books show={page === "books"} genres={genres} />
       <NewBook show={page === "add"} setError={notify} />
+      <Recommendations show={page === "recommend"} genre={result} />
       <LoginForm
         show={page === "login" && !token}
         setToken={setToken}
         setError={notify}
+        setPage={setPage}
       />
     </div>
   );
