@@ -80,3 +80,17 @@ export const FAVORITE_GENRE = gql`
     }
   }
 `;
+
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      id
+      title
+      published
+      genres
+      author {
+        name
+      }
+    }
+  }
+`;

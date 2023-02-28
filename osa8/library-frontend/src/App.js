@@ -3,8 +3,8 @@ import Authors from "./components/Authors";
 import Books from "./components/Books";
 import NewBook from "./components/NewBook";
 import Recommendations from "./components/Recommend";
-import { useQuery, useApolloClient } from "@apollo/client";
-import { ALL } from "./queries";
+import { useQuery, useApolloClient, useSubscription } from "@apollo/client";
+import { ALL, BOOK_ADDED } from "./queries";
 
 import LoginForm from "./components/LoginForm";
 
@@ -20,22 +20,6 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [token, setToken] = useState(null);
-  const [favGenre, setFavGenre] = useState(null);
-
-  const result = useQuery(ALL, {
-    pollInterval: 2000,
-  });
-  const client = useApolloClient();
-
-  if (result.loading) {
-    return <div>loading...</div>;
-  }
-  let genres = Array.prototype.concat.apply(
-    [],
-    result.data.allBooks.map((b) => b.genres)
-  );
-  genres = [...new Set(genres)];
-
   const notify = (message) => {
     setErrorMessage(message);
     setTimeout(() => {
@@ -48,6 +32,33 @@ const App = () => {
     client.resetStore();
     setPage("authors");
   };
+
+  const result = useQuery(ALL, {
+    pollInterval: 2000,
+  });
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      const bookAdded = data.data.bookAdded;
+      notify(`${bookAdded.title} added`);
+
+      // client.cache.updateQuery({ query: ALL }, ({ allBooks }) => {
+      //   return {
+      //     allBooks: allPersons.concat(bookAdded),
+      //   }
+      // })
+    },
+  });
+
+  const client = useApolloClient();
+
+  if (result.loading) {
+    return <div>loading...</div>;
+  }
+  let genres = Array.prototype.concat.apply(
+    [],
+    result.data.allBooks.map((b) => b.genres)
+  );
+  genres = [...new Set(genres)];
 
   return (
     <div>
