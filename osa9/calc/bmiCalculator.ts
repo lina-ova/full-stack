@@ -1,4 +1,4 @@
-const calculateBmi = (a: number, b: number) => {
+const calculateBmi = (a: number, b: number) :string=> {
   const bmi = b/((a/100)**2)
   if (bmi <16) return "Underweight (Severe thinness)"
   if (bmi <=16.9) return "Underweight (Moderate thinness)"
